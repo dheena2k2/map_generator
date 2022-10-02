@@ -13,6 +13,7 @@ class Map:
         self.map = Image.new('L', map_dimension, 'white')
         self.default_map = self.map.copy()
         self.draw = ImageDraw.Draw(self.map)
+        self.dimension = map_dimension
 
     def add_rectangle(self, x1, y1, x2, y2):
         """
