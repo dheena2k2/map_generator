@@ -73,3 +73,22 @@ class MapGenerator:
                     curr_x = np.random.randint(0, self.map.dimension[0])
                     curr_y = np.random.randint(0, self.map.dimension[1])
                     self.map.add_circle(curr_x, curr_y, curr_radius)
+                elif shape == 'rectangle':
+                    curr_length = allot_integer(
+                        curr_parameters['mean_length'],
+                        curr_parameters['std_length']
+                    )
+                    curr_breadth = allot_integer(
+                        curr_parameters['mean_length'],
+                        curr_parameters['std_length']
+                    )
+                    curr_length = int(curr_length / 2)
+                    curr_breadth = int(curr_breadth / 2)
+                    curr_x = np.random.randint(0, self.map.dimension[0])
+                    curr_y = np.random.randint(0, self.map.dimension[1])
+                    self.map.add_rectangle(
+                        curr_x - curr_length,
+                        curr_y - curr_breadth,
+                        curr_x + curr_length,
+                        curr_y + curr_breadth
+                    )
