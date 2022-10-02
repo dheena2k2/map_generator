@@ -44,11 +44,11 @@ class MapGenerator:
         for shape in parameters:
             for parameter in parameters[shape]:
                 params = tuple(parameter)
-                if shape == 'circle':
+                if 'circle' in shape:
                     self.map.add_circle(*params)
-                elif shape == 'rectangle':
+                elif 'rectangle' in shape:
                     self.map.add_rectangle(*params)
-                elif shape == 'polygon':
+                elif 'polygon' in shape:
                     tuple_params = [tuple(x) for x in params]
                     self.map.add_polygon(tuple_params)
 
@@ -65,7 +65,7 @@ class MapGenerator:
                 curr_parameters['std_count']
             )
             for i in range(curr_count):
-                if shape == 'circle':
+                if 'circle' in shape:
                     curr_radius = allot_integer(
                         curr_parameters['mean_radius'],
                         curr_parameters['std_radius']
@@ -73,7 +73,7 @@ class MapGenerator:
                     curr_x = np.random.randint(0, self.map.dimension[0])
                     curr_y = np.random.randint(0, self.map.dimension[1])
                     self.map.add_circle(curr_x, curr_y, curr_radius)
-                elif shape == 'rectangle':
+                elif 'rectangle' in shape:
                     curr_length = allot_integer(
                         curr_parameters['mean_length'],
                         curr_parameters['std_length']
