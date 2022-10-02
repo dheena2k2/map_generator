@@ -8,6 +8,7 @@ class Map:
     """
     def __init__(self, map_dimension):
         """
+        Initialize variables
         :param map_dimension: dimension of the map to create
         """
         self.map = Image.new('L', map_dimension, 'white')
