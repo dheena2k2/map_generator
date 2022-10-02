@@ -1,5 +1,20 @@
 from .map import Map
 import yaml
+import numpy as np
+
+
+def allot_integer(mean_val, std_val, lower_limit=0):
+    """
+    Method to generate an integer
+    :param mean_val: mean value of valid integer distribution
+    :param std_val: standard deviation value of valid integer distribution
+    :param lower_limit: lowest value the integer can take
+    :return:
+    """
+    curr_val = round(np.random.normal(mean_val, std_val))
+    while curr_val < lower_limit:
+        curr_val = round(np.random.normal(mean_val, std_val))
+    return curr_val
 
 
 class MapGenerator:
@@ -17,6 +32,8 @@ class MapGenerator:
         self.map = Map(map_dimension)
         if map_data['generation_type'] == 'custom':
             self.generate_custom_map(map_data['generation_parameters'])
+        elif map_data['generation_type'] == 'random':
+            self.generate_random_map(map_data['generation_parameters'])
 
     def generate_custom_map(self, parameters):
         """
@@ -34,3 +51,25 @@ class MapGenerator:
                 elif shape == 'polygon':
                     tuple_params = [tuple(x) for x in params]
                     self.map.add_polygon(tuple_params)
+
+    def generate_random_map(self, parameters):
+        """
+        Method to add shapes randomly from random generation parameters
+        :param parameters: custom map parameters
+        :return: None
+        """
+        for shape in parameters:
+            curr_parameters = parameters[shape]
+            curr_count = allot_integer(
+                curr_parameters['mean_count'],
+                curr_parameters['std_count']
+            )
+            for i in range(curr_count):
+                if shape == 'circle':
+                    curr_radius = allot_integer(
+                        curr_parameters['mean_radius'],
+                        curr_parameters['std_radius']
+                    )
+                    curr_x = np.random.randint(0, self.map.dimension[0])
+                    curr_y = np.random.randint(0, self.map.dimension[1])
+                    self.map.add_circle(curr_x, curr_y, curr_radius)
